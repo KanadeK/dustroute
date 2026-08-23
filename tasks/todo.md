@@ -9,22 +9,22 @@
 
 ## Task 2: Physics and operating point
 
-- [ ] Implement unit conversions, friction factor, segment loss, fan interpolation, and deterministic intersection.
+- [x] Implement unit conversions, friction factor, segment loss, fan interpolation, and deterministic intersection.
 - Acceptance: hand-calculated anchors meet stated tolerances; no-intersection boundaries are explicit.
 - Verify: focused physics tests plus full suite.
 - Files: `src/core/units.js`, `src/core/physics.js`, `src/core/fan.js`, `tests/physics.test.js`.
 
 ## Task 3: Project analysis
 
-- [ ] Produce route verdicts, constraint margins, loss breakdowns, and plot samples.
+- [x] Produce route verdicts, constraint margins, loss breakdowns, and plot samples.
 - Acceptance: passing and failing fixtures have correct stable verdicts and governing issues.
 - Verify: integration tests and coverage.
 - Files: `src/core/analyze.js`, `tests/analyze.test.js`, fixture adjustments.
 
 ### Checkpoint: Core
 
-- [ ] `npm test` and `npm run test:coverage` pass.
-- [ ] Numeric anchors and physical claim boundaries reviewed.
+- [x] `npm test` and `npm run test:coverage` pass.
+- [x] Numeric anchors and physical claim boundaries reviewed.
 
 ## Task 4: CLI and reports
 

@@ -20,7 +20,7 @@
   "scripts": {
     "test": "node --test",
     "test:coverage": "node --test --experimental-test-coverage",
-    "lint": "node --check src/core/validate.js && node --check tests/validation.test.js",
+    "lint": "node --check src/core/analyze.js && node --check src/core/fan.js && node --check src/core/physics.js && node --check src/core/units.js && node --check src/core/validate.js && node --check tests/analyze.test.js && node --check tests/physics.test.js && node --check tests/validation.test.js",
     "build": "node scripts/build.mjs",
     "check": "node bin/dustroute.js check examples/garage-shop.json",
     "start": "node scripts/serve.mjs"

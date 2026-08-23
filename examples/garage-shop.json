@@ -18,9 +18,9 @@
   "segments": [
     {
       "id": "collector-inlet",
-      "label": "Collector, separator, and filter allowance",
+      "label": "Collector, separator, filter, and five-inch inlet allowance",
       "lengthFt": 4,
-      "diameterIn": 7,
+      "diameterIn": 5,
       "roughnessIn": 0.0006,
       "lossMultiplier": 1,
       "fittings": [
@@ -29,9 +29,9 @@
     },
     {
       "id": "main-trunk",
-      "label": "Six-inch smooth main trunk",
+      "label": "Five-inch smooth main trunk",
       "lengthFt": 18,
-      "diameterIn": 6,
+      "diameterIn": 5,
       "roughnessIn": 0.0006,
       "lossMultiplier": 1,
       "fittings": [
@@ -93,7 +93,7 @@
       "id": "miter-saw",
       "label": "Miter saw",
       "targetCfm": 350,
-      "minTransportFpm": 3500,
+      "minTransportFpm": 3000,
       "segmentIds": ["collector-inlet", "main-trunk", "miter-flex"]
     }
   ]
