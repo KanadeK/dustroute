@@ -1,4 +1,5 @@
 const ID_PATTERN = /^[a-z0-9][a-z0-9-]*$/;
+const CONTROL_CHARACTER_PATTERN = /[\u0000-\u001f\u007f]/;
 
 export class ProjectValidationError extends Error {
   constructor(issues) {
@@ -21,6 +22,8 @@ function validateString(value, path, issues, { optional = false } = {}) {
   if (optional && value === undefined) return;
   if (typeof value !== 'string' || value.trim() === '') {
     issues.push({ path, message: 'must be a non-empty string' });
+  } else if (CONTROL_CHARACTER_PATTERN.test(value)) {
+    issues.push({ path, message: 'must not contain control characters' });
   }
 }
 

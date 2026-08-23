@@ -28,7 +28,7 @@
 
 ## Task 4: CLI and reports
 
-- [ ] Implement analyze/check, three formats, usage errors, and exit codes.
+- [x] Implement analyze/check, three formats, usage errors, and exit codes.
 - Acceptance: real child-process tests prove output and 0/1/2 exit semantics.
 - Verify: CLI tests and `npm run check`.
 - Files: `bin/dustroute.js`, `src/core/report.js`, `tests/cli.test.js`.

@@ -96,3 +96,22 @@ test('rejects a fan curve that rises in pressure or lacks boundary endpoints', a
     },
   );
 });
+
+test('rejects terminal control characters in user-visible strings', async () => {
+  const input = await readExample('garage-shop.json');
+  input.project.name = 'Unsafe\u001b[31m label';
+
+  assert.throws(
+    () => validateProject(input),
+    (error) => {
+      assert.ok(error instanceof ProjectValidationError);
+      assert.deepEqual(error.issues, [
+        {
+          path: 'project.name',
+          message: 'must not contain control characters',
+        },
+      ]);
+      return true;
+    },
+  );
+});
