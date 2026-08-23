@@ -67,6 +67,6 @@
 
 ## Task 9: Public release and notification
 
-- [ ] Create `KanadeK/dustroute`, push main, wait for CI/Pages, create immutable `v0.1.0`, publish Release artifact, verify contributor list, send Gmail.
+- [x] Create `KanadeK/dustroute`, push main, wait for CI/Pages, create immutable `v0.1.0`, publish Release artifact, verify contributor list, send Gmail.
 - Acceptance: public repo, Pages, tag, Release, assets, checks, and sent message are remotely confirmed.
 - Verify: remote URLs/API/Actions and Gmail message ID.
