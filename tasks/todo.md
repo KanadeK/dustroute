@@ -2,7 +2,7 @@
 
 ## Task 1: Project contract and fixtures
 
-- [ ] Add package/configuration files, v1 example projects, and validation tests.
+- [x] Add package/configuration files, v1 example projects, and validation tests.
 - Acceptance: valid fixture passes; malformed/duplicate/reference/monotonicity cases fail with stable issue paths.
 - Verify: focused validation test fails before implementation and passes afterward.
 - Files: `package.json`, `examples/*.json`, `tests/validation.test.js`, `src/core/validate.js`.

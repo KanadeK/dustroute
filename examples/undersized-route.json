@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "project": {
+    "name": "Deliberately failing long flex route",
+    "notes": "Test fixture: this route is expected to miss both stated constraints."
+  },
+  "air": {
+    "densityKgM3": 1.204,
+    "kinematicViscosityM2S": 0.00001506
+  },
+  "fanCurve": [
+    { "cfm": 0, "pressureInWg": 5.5 },
+    { "cfm": 250, "pressureInWg": 4.1 },
+    { "cfm": 500, "pressureInWg": 1.9 },
+    { "cfm": 700, "pressureInWg": 0 }
+  ],
+  "segments": [
+    {
+      "id": "long-flex",
+      "label": "Long restrictive flex route",
+      "lengthFt": 35,
+      "diameterIn": 5,
+      "roughnessIn": 0.004,
+      "lossMultiplier": 3,
+      "fittings": [
+        { "label": "Sharp bends, gate, and hood", "lossCoefficient": 5, "quantity": 1 }
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "id": "wide-belt",
+      "label": "Demanding sander",
+      "targetCfm": 650,
+      "minTransportFpm": 5000,
+      "segmentIds": ["long-flex"]
+    }
+  ]
+}

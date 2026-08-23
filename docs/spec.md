@@ -29,7 +29,7 @@ The v1 JSON document contains:
 - `schemaVersion: 1`
 - `project`: display name and optional notes
 - `air`: density in kg/m3 and kinematic viscosity in m2/s
-- `fanCurve`: two or more `{ cfm, pressureInWg }` points ordered by increasing CFM and non-increasing pressure
+- `fanCurve`: two or more `{ cfm, pressureInWg }` points ordered by increasing CFM and non-increasing pressure, beginning at zero CFM and ending at zero pressure
 - `segments`: uniquely named round-duct segments with length, diameter, roughness, loss multiplier, and explicit fitting K values
 - `routes`: uniquely named tool routes with a target CFM, minimum transport FPM, and ordered segment IDs
 

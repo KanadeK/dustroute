@@ -1,0 +1,49 @@
+{
+  "name": "dustroute",
+  "version": "0.1.0",
+  "description": "Transparent fan-curve and duct-route analysis for one-gate-at-a-time woodshop dust collection.",
+  "type": "module",
+  "bin": {
+    "dustroute": "bin/dustroute.js"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "web/",
+    "examples/",
+    "docs/",
+    "README.md",
+    "README.zh-CN.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test",
+    "test:coverage": "node --test --experimental-test-coverage",
+    "lint": "node --check src/core/validate.js && node --check tests/validation.test.js",
+    "build": "node scripts/build.mjs",
+    "check": "node bin/dustroute.js check examples/garage-shop.json",
+    "start": "node scripts/serve.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "keywords": [
+    "woodworking",
+    "dust-collection",
+    "ductwork",
+    "fan-curve",
+    "airflow",
+    "local-first"
+  ],
+  "author": "KanadeK <121669563+KanadeK@users.noreply.github.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KanadeK/dustroute.git"
+  },
+  "bugs": {
+    "url": "https://github.com/KanadeK/dustroute/issues"
+  },
+  "homepage": "https://kanadek.github.io/dustroute/"
+}

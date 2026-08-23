@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "project": {
+    "name": "Illustrative three-tool garage shop",
+    "notes": "Demonstration values only. Replace every physical input with manufacturer data or measured values for your own shop."
+  },
+  "air": {
+    "densityKgM3": 1.204,
+    "kinematicViscosityM2S": 0.00001506
+  },
+  "fanCurve": [
+    { "cfm": 0, "pressureInWg": 11.5 },
+    { "cfm": 400, "pressureInWg": 10.7 },
+    { "cfm": 800, "pressureInWg": 8.6 },
+    { "cfm": 1200, "pressureInWg": 5.1 },
+    { "cfm": 1600, "pressureInWg": 0 }
+  ],
+  "segments": [
+    {
+      "id": "collector-inlet",
+      "label": "Collector, separator, and filter allowance",
+      "lengthFt": 4,
+      "diameterIn": 7,
+      "roughnessIn": 0.0006,
+      "lossMultiplier": 1,
+      "fittings": [
+        { "label": "User-supplied separator/filter equivalent", "lossCoefficient": 4.2, "quantity": 1 }
+      ]
+    },
+    {
+      "id": "main-trunk",
+      "label": "Six-inch smooth main trunk",
+      "lengthFt": 18,
+      "diameterIn": 6,
+      "roughnessIn": 0.0006,
+      "lossMultiplier": 1,
+      "fittings": [
+        { "label": "Long-radius elbow", "lossCoefficient": 0.2, "quantity": 2 }
+      ]
+    },
+    {
+      "id": "table-saw-drop",
+      "label": "Table saw five-inch drop",
+      "lengthFt": 10,
+      "diameterIn": 5,
+      "roughnessIn": 0.0006,
+      "lossMultiplier": 1,
+      "fittings": [
+        { "label": "Wye branch", "lossCoefficient": 0.3, "quantity": 1 },
+        { "label": "Blast gate and hood", "lossCoefficient": 1.25, "quantity": 1 }
+      ]
+    },
+    {
+      "id": "planer-drop",
+      "label": "Planer five-inch drop",
+      "lengthFt": 7,
+      "diameterIn": 5,
+      "roughnessIn": 0.0006,
+      "lossMultiplier": 1,
+      "fittings": [
+        { "label": "Wye branch", "lossCoefficient": 0.3, "quantity": 1 },
+        { "label": "Blast gate and hood", "lossCoefficient": 1.1, "quantity": 1 }
+      ]
+    },
+    {
+      "id": "miter-flex",
+      "label": "Miter saw four-inch flex tail",
+      "lengthFt": 6,
+      "diameterIn": 4,
+      "roughnessIn": 0.003,
+      "lossMultiplier": 2.2,
+      "fittings": [
+        { "label": "Wye, gate, and hood", "lossCoefficient": 1.8, "quantity": 1 }
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "id": "table-saw",
+      "label": "Table saw",
+      "targetCfm": 500,
+      "minTransportFpm": 3500,
+      "segmentIds": ["collector-inlet", "main-trunk", "table-saw-drop"]
+    },
+    {
+      "id": "planer",
+      "label": "Planer",
+      "targetCfm": 550,
+      "minTransportFpm": 3500,
+      "segmentIds": ["collector-inlet", "main-trunk", "planer-drop"]
+    },
+    {
+      "id": "miter-saw",
+      "label": "Miter saw",
+      "targetCfm": 350,
+      "minTransportFpm": 3500,
+      "segmentIds": ["collector-inlet", "main-trunk", "miter-flex"]
+    }
+  ]
+}
