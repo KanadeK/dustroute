@@ -6,6 +6,24 @@ import {
   paToInWg,
 } from './units.js';
 
+export class CalculationError extends Error {
+  constructor(segmentId, cfm) {
+    super(
+      `segment "${segmentId}" at ${cfm} CFM did not produce finite values`,
+    );
+    this.name = 'CalculationError';
+    this.code = 'CALCULATION_ERROR';
+    this.segmentId = segmentId;
+    this.cfm = cfm;
+  }
+}
+
+function requireFiniteCalculation(segmentId, cfm, values) {
+  if (values.some((value) => !Number.isFinite(value))) {
+    throw new CalculationError(segmentId, cfm);
+  }
+}
+
 export function velocityMps(flowM3s, diameterM) {
   const areaM2 = Math.PI * (diameterM / 2) ** 2;
   return flowM3s / areaM2;
@@ -45,6 +63,20 @@ export function analyzeSegmentAtCfm(segment, air, cfm) {
     0,
   );
 
+  if (
+    diameterM === 0 ||
+    lengthM === 0 ||
+    (cfm > 0 && (flowM3s === 0 || velocity === 0))
+  ) {
+    throw new CalculationError(segment.id, cfm);
+  }
+  requireFiniteCalculation(segment.id, cfm, [
+    diameterM,
+    lengthM,
+    flowM3s,
+    velocity,
+  ]);
+
   if (cfm === 0) {
     return {
       segmentId: segment.id,
@@ -76,6 +108,13 @@ export function analyzeSegmentAtCfm(segment, air, cfm) {
     (wallLossCoefficient + fittingLossCoefficient) * segment.lossMultiplier;
   const pressureLossPa =
     0.5 * air.densityKgM3 * effectiveLossCoefficient * velocity ** 2;
+  requireFiniteCalculation(segment.id, cfm, [
+    reynolds,
+    frictionFactor,
+    wallLossCoefficient,
+    effectiveLossCoefficient,
+    pressureLossPa,
+  ]);
 
   return {
     segmentId: segment.id,

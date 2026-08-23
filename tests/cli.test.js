@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { mkdtemp, rm, writeFile } from 'node:fs/promises';
+import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -96,6 +96,26 @@ test('malformed JSON and validation failures exit two with repairable paths', as
     assert.equal(invalidResult.code, 2);
     assert.match(invalidResult.stderr, /schemaVersion: must equal 1/);
     assert.match(invalidResult.stderr, /project: must be an object/);
+  } finally {
+    await rm(directory, { recursive: true });
+  }
+});
+
+test('a non-finite physical calculation exits two without a stack trace', async () => {
+  const directory = await mkdtemp(join(tmpdir(), 'dustroute-extreme-'));
+  try {
+    const extremePath = join(directory, 'extreme.json');
+    const project = JSON.parse(
+      await readFile(join(ROOT, 'examples', 'garage-shop.json'), 'utf8'),
+    );
+    project.segments[0].diameterIn = Number.MIN_VALUE;
+    await writeFile(extremePath, JSON.stringify(project), 'utf8');
+
+    const result = await runCli(['analyze', extremePath]);
+
+    assert.equal(result.code, 2);
+    assert.match(result.stderr, /Calculation error: segment "collector-inlet"/);
+    assert.doesNotMatch(result.stderr, /\n\s+at /);
   } finally {
     await rm(directory, { recursive: true });
   }

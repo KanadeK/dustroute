@@ -1,4 +1,5 @@
 import { analyzeProject } from './core/analyze.js';
+import { CalculationError } from './core/physics.js';
 import { renderMarkdownReport } from './core/report.js';
 import {
   ProjectValidationError,
@@ -51,6 +52,19 @@ function svgElement(name, attributes = {}, text = '') {
 function setInputStatus(message, error = false) {
   elements.inputStatus.textContent = message;
   elements.inputStatus.classList.toggle('error', error);
+}
+
+function invalidateInput(message) {
+  state.analysis = null;
+  state.activeRouteId = null;
+  elements.summaryBadge.textContent = 'Input error';
+  elements.summaryBadge.className = 'summary-badge fail';
+  elements.summaryCopy.textContent = 'Fix the project input to produce a new analysis.';
+  elements.routeTabs.replaceChildren();
+  elements.routeDetail.hidden = true;
+  elements.downloadJson.disabled = true;
+  elements.downloadMarkdown.disabled = true;
+  setInputStatus(message, true);
 }
 
 function metric(label, value, unit) {
@@ -328,6 +342,10 @@ function renderAnalysis(analysis) {
 }
 
 function analyzeEditor() {
+  if (new TextEncoder().encode(elements.editor.value).byteLength > MAX_IMPORT_BYTES) {
+    invalidateInput('Input rejected: project text exceeds the 1 MiB limit.');
+    return;
+  }
   try {
     const project = validateProject(JSON.parse(elements.editor.value));
     state.analysis = analyzeProject(project);
@@ -337,7 +355,7 @@ function analyzeEditor() {
     );
   } catch (error) {
     if (error instanceof SyntaxError) {
-      setInputStatus(`JSON parse error: ${error.message}`, true);
+      invalidateInput(`JSON parse error: ${error.message}`);
       return;
     }
     if (error instanceof ProjectValidationError) {
@@ -348,7 +366,11 @@ function analyzeEditor() {
       const remainder = error.issues.length > 4
         ? ` · ${error.issues.length - 4} more`
         : '';
-      setInputStatus(`${details}${remainder}`, true);
+      invalidateInput(`${details}${remainder}`);
+      return;
+    }
+    if (error instanceof CalculationError) {
+      invalidateInput(`Calculation error: ${error.message}`);
       return;
     }
     throw error;
@@ -367,7 +389,7 @@ function download(filename, type, content) {
   anchor.href = url;
   anchor.download = filename;
   anchor.click();
-  URL.revokeObjectURL(url);
+  setTimeout(() => URL.revokeObjectURL(url), 0);
 }
 
 elements.loadSample.addEventListener('click', loadSample);
@@ -376,7 +398,7 @@ elements.file.addEventListener('change', async () => {
   const [file] = elements.file.files;
   if (!file) return;
   if (file.size > MAX_IMPORT_BYTES) {
-    setInputStatus('Import rejected: file exceeds the 1 MiB limit.', true);
+    invalidateInput('Import rejected: file exceeds the 1 MiB limit.');
     elements.file.value = '';
     return;
   }
@@ -384,7 +406,7 @@ elements.file.addEventListener('change', async () => {
     elements.editor.value = await file.text();
   } catch (error) {
     if (error instanceof DOMException) {
-      setInputStatus(`Could not read file: ${error.message}`, true);
+      invalidateInput(`Could not read file: ${error.message}`);
       elements.file.value = '';
       return;
     }

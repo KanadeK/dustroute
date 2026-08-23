@@ -18,7 +18,15 @@ const CONTENT_TYPES = new Map([
 ]);
 
 const server = createServer(async (request, response) => {
-  const pathname = decodeURIComponent(new URL(request.url, 'http://local').pathname);
+  let pathname;
+  try {
+    pathname = decodeURIComponent(new URL(request.url, 'http://local').pathname);
+  } catch (error) {
+    if (!(error instanceof URIError)) throw error;
+    response.writeHead(400, { 'Content-Type': 'text/plain; charset=utf-8' });
+    response.end('Bad request');
+    return;
+  }
   const relativePath = pathname === '/' ? 'index.html' : pathname.slice(1);
   const filePath = normalize(join(DIST, relativePath));
 

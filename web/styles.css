@@ -6,7 +6,7 @@
   --panel: #fffdf8;
   --line: #d7d0c2;
   --line-dark: #9da8a5;
-  --orange: #ed6630;
+  --orange: #c94b1c;
   --orange-dark: #b63e15;
   --teal: #0a716d;
   --teal-light: #d7ebe6;
@@ -340,10 +340,17 @@ h1 {
 
 .diagram-note span,
 .step-number {
-  color: var(--orange);
   font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
   font-size: 0.72rem;
   font-weight: 800;
+}
+
+.diagram-note span {
+  color: #ff8d5e;
+}
+
+.step-number {
+  color: var(--orange);
 }
 
 .workbench {

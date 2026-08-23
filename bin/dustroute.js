@@ -3,6 +3,7 @@
 import { readFile } from 'node:fs/promises';
 
 import { analyzeProject } from '../src/core/analyze.js';
+import { CalculationError } from '../src/core/physics.js';
 import {
   renderMarkdownReport,
   renderTerminalReport,
@@ -82,6 +83,9 @@ try {
     for (const issue of error.issues) {
       process.stderr.write(`- ${issue.path}: ${issue.message}\n`);
     }
+    process.exitCode = 2;
+  } else if (error instanceof CalculationError) {
+    process.stderr.write(`Calculation error: ${error.message}\n`);
     process.exitCode = 2;
   } else {
     throw error;

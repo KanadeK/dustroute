@@ -97,6 +97,12 @@ test('local server sets a strict boundary and returns a real 404', async () => {
     const missingResponse = await fetch(
       `http://127.0.0.1:${running.port}/not-a-real-file`,
     );
+    const malformedResponse = await fetch(
+      `http://127.0.0.1:${running.port}/%E0%A4%A`,
+    );
+    const afterMalformedResponse = await fetch(
+      `http://127.0.0.1:${running.port}/`,
+    );
 
     assert.equal(indexResponse.status, 200);
     assert.match(
@@ -105,9 +111,14 @@ test('local server sets a strict boundary and returns a real 404', async () => {
     );
     assert.equal(missingResponse.status, 404);
     assert.equal(await missingResponse.text(), 'Not found');
+    assert.equal(malformedResponse.status, 400);
+    assert.equal(await malformedResponse.text(), 'Bad request');
+    assert.equal(afterMalformedResponse.status, 200);
     assert.equal(running.stderr(), '');
   } finally {
-    running.child.kill();
-    await once(running.child, 'close');
+    if (running.child.exitCode === null) {
+      running.child.kill();
+      await once(running.child, 'close');
+    }
   }
 });

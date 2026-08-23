@@ -42,6 +42,8 @@ Boundary errors use one stable shape:
 }
 ```
 
+Finite boundary values that overflow or underflow the calculation fail with `CALCULATION_ERROR`, the segment ID, and candidate CFM; reports never contain `NaN` or infinity.
+
 The core public functions are additive and documented:
 
 ```js

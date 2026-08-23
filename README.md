@@ -165,10 +165,11 @@ node bin/dustroute.js check examples/undersized-route.json
 Use the exit code and first concrete message; do not edit values merely to make the badge green.
 
 1. **Exit `2`, field path shown** — fix that exact JSON field. Fan points must start at `0 CFM`, increase in CFM, never rise in pressure, and end at `0 in. wg`. Segment and route IDs must be unique and referenced segments must exist.
-2. **Exit `1`, airflow below target** — inspect the route's largest pressure-loss segments, then verify the real fan curve, length, diameter, roughness, fitting K, and loss multiplier. Change only inputs that differ in the real system.
-3. **Exit `1`, velocity below minimum** — inspect the named segment and re-check its diameter and the minimum you explicitly selected. DustRoute does not choose a replacement threshold for you.
-4. **Build or test failure** — run `node --version` (22/24 required), remove only the generated `dist/` directory if it is stale, run `npm ci`, and retry the single failing command before the full gate.
-5. **Result still looks implausible** — stop using the output as a decision basis. Re-check units and source data, compare against equipment documentation or measurements, and obtain qualified review where the consequence warrants it.
+2. **Exit `2`, calculation error** — one or more finite JSON numbers overflowed or underflowed after unit conversion. Re-check the named segment for impossible magnitudes or wrong units; DustRoute refuses to serialize `NaN`/infinity as a result.
+3. **Exit `1`, airflow below target** — inspect the route's largest pressure-loss segments, then verify the real fan curve, length, diameter, roughness, fitting K, and loss multiplier. Change only inputs that differ in the real system.
+4. **Exit `1`, velocity below minimum** — inspect the named segment and re-check its diameter and the minimum you explicitly selected. DustRoute does not choose a replacement threshold for you.
+5. **Build or test failure** — run `node --version` (22/24 required), remove only the generated `dist/` directory if it is stale, run `npm ci`, and retry the single failing command before the full gate.
+6. **Result still looks implausible** — stop using the output as a decision basis. Re-check units and source data, compare against equipment documentation or measurements, and obtain qualified review where the consequence warrants it.
 
 More cases are in [troubleshooting](docs/troubleshooting.md).
 

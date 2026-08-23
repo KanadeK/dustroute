@@ -7,6 +7,7 @@ All notable changes to DustRoute are documented here. The format follows [Keep a
 ### Added
 
 - Versioned v1 project JSON with path-addressed boundary errors.
+- Explicit non-finite calculation failure instead of `NaN`, infinity, or JSON `null` output.
 - Darcy–Weisbach round-duct loss calculation, explicit fitting K values, fan interpolation, and deterministic operating-point solver.
 - Per-route verdicts, margins, curve samples, and per-segment loss evidence.
 - `analyze` and `check` CLI commands with terminal, JSON, and Markdown formats and stable 0/1/2 exit codes.

@@ -114,6 +114,8 @@ Boundary validation uses:
 }
 ```
 
+If validated finite inputs still overflow or underflow during unit conversion or physics, DustRoute fails with `CALCULATION_ERROR`, the segment ID, and candidate CFM instead of emitting `NaN`, infinity, or JSON `null`.
+
 ## Browser import
 
 The workbench accepts local `.json` files up to 1 MiB or pasted/edited text. It parses and validates in the browser, renders imported text using DOM text nodes, and makes no API request. The passing example is generated into the build from `examples/garage-shop.json`, preventing a separate browser fixture from drifting.

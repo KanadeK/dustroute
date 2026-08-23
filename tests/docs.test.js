@@ -33,7 +33,8 @@ test('every local Markdown link resolves inside the repository', async () => {
       if (!target || /^(https?:|mailto:)/.test(target)) continue;
       try {
         await access(join(dirname(absoluteFile), decodeURIComponent(target)));
-      } catch {
+      } catch (error) {
+        if (!['ENOENT', 'ENOTDIR'].includes(error.code)) throw error;
         failures.push(`${relativeFile} -> ${target}`);
       }
     }

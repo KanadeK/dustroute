@@ -61,7 +61,7 @@
 
 ## Task 8: Review and local release gate
 
-- [ ] Review correctness, simplicity, architecture, security, performance, and requirement coverage; fix all required findings.
+- [x] Review correctness, simplicity, architecture, security, performance, and requirement coverage; fix all required findings.
 - Acceptance: clean Git status, intended author identity, no co-author trailers/secrets, every success criterion evidenced.
 - Verify: one final changed-state gate and package inspection.
 

@@ -51,6 +51,12 @@ Fix the named boundary:
 | `must equal 0 at the final point` | Include the fan curve's zero-pressure endpoint rather than extrapolating |
 | `must be greater than 0` | Correct a zero/negative physical input from its source |
 
+## Exit code 2: calculation is non-finite
+
+The message names a segment and candidate CFM. A JSON number can be finite yet still overflow or underflow when converted or combined—for example, a diameter many orders of magnitude below any physical duct.
+
+Check the named segment for a wrong unit, misplaced exponent, or impossible magnitude. DustRoute stops instead of emitting `NaN`, infinity, or a misleading JSON `null`.
+
 ## Exit code 1: route constraint failure
 
 This is a successful calculation and a failed user-defined condition, not a parser bug.

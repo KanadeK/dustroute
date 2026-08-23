@@ -10,6 +10,7 @@ import {
 } from '../src/core/units.js';
 import {
   analyzeSegmentAtCfm,
+  CalculationError,
   darcyFrictionFactor,
   reynoldsNumber,
   velocityMps,
@@ -95,6 +96,33 @@ test('returns zero segment loss at the zero-flow fan boundary', () => {
   assert.equal(result.velocityFpm, 0);
   assert.equal(result.pressureLossInWg, 0);
   assert.equal(result.frictionFactor, 0);
+});
+
+test('fails explicitly when finite boundary inputs overflow the calculation', () => {
+  assert.throws(
+    () =>
+      analyzeSegmentAtCfm(
+        {
+          id: 'too-small',
+          label: 'Underflowing diameter',
+          lengthFt: 1,
+          diameterIn: Number.MIN_VALUE,
+          roughnessIn: 0,
+          lossMultiplier: 1,
+          fittings: [],
+        },
+        { densityKgM3: 1.204, kinematicViscosityM2S: 0.00001506 },
+        500,
+      ),
+    (error) => {
+      assert.ok(error instanceof CalculationError);
+      assert.equal(error.code, 'CALCULATION_ERROR');
+      assert.equal(error.segmentId, 'too-small');
+      assert.equal(error.cfm, 500);
+      assert.match(error.message, /did not produce finite values/);
+      return true;
+    },
+  );
 });
 
 test('interpolates the supplied fan curve without inventing extrapolation', () => {
