@@ -54,7 +54,7 @@
 
 ## Task 7: Documentation and automation
 
-- [ ] Complete bilingual README, usage/equations/troubleshooting, changelog, policies, CI, and Pages.
+- [x] Complete bilingual README, usage/equations/troubleshooting, changelog, policies, CI, and Pages.
 - Acceptance: clone-to-result and failure repair are copy-pasteable; workflows use current official Actions.
 - Verify: document link check, syntax/build/check/package gates.
 - Files: `README.md`, `README.zh-CN.md`, `docs/*`, `.github/workflows/*`, policy files.
