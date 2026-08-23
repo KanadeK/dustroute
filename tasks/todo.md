@@ -35,22 +35,22 @@
 
 ## Task 5: Browser workbench
 
-- [ ] Implement local JSON import/edit, sample load, result summary, route detail, curve SVG, and downloads.
+- [x] Implement local JSON import/edit, sample load, result summary, route detail, curve SVG, and downloads.
 - Acceptance: all actions work without remote requests and imported strings are rendered as text.
 - Verify: browser/build tests plus isolated runtime inspection.
 - Files: `web/index.html`, `web/app.js`, `web/styles.css`, `tests/build.test.js`.
 
 ## Task 6: Build and local server
 
-- [ ] Build a deployable `dist/` tree and serve it locally without dependencies.
+- [x] Build a deployable `dist/` tree and serve it locally without dependencies.
 - Acceptance: imports resolve under a repository Pages base path; unknown paths fail cleanly.
 - Verify: build tests and localhost browser load.
 - Files: `scripts/build.mjs`, `scripts/serve.mjs`, `package.json`, `tests/build.test.js`.
 
 ### Checkpoint: Executable product
 
-- [ ] CLI and browser agree on the same example.
-- [ ] Console, accessibility tree, keyboard flow, and target viewports pass.
+- [x] CLI and browser agree on the same example.
+- [x] Console, accessibility tree, keyboard flow, and target viewports pass.
 
 ## Task 7: Documentation and automation
 
